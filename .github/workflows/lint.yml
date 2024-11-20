@@ -20,5 +20,5 @@ jobs:
          
      - name: Run tflint
        run: |
-        cd Org_Template/terraform-google-cloud-folder
+        cd Org-Templates
         tflint --var-file=folder.tfvars --var-file=orgpolicy.tfvars
