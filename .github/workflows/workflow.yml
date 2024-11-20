@@ -44,9 +44,11 @@ jobs:
 
       # Terraform Init
       - name: Terraform Init
-        run: |
         working-directory: ${{ env.WORKING-DIRECTORY }}
-          terraform init -upgrade
+        run: |
+          terraform init -upgrade 
+        
+        
 
   validate:
     runs-on: ubuntu-latest
