@@ -14,10 +14,15 @@ permissions:
 
 jobs:
   init:
-    runs-on: ubuntu-latest      
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        shell: bash      
     env: 
       WORKING-DIRECTORY: Org-Templates
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}  
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    
+  
 
     steps:
       # Checkout repository to GitHub action runner
