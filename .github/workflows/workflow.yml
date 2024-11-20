@@ -1,7 +1,9 @@
 
 
 name: cicd
-
+env: 
+  WORKING-DIRECTORY: Org-Templates
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 on:
   push: 
     branches: [ "main" ]
@@ -10,9 +12,7 @@ on:
 permissions:
   contents: read
   id-token: 'write'
-env: 
-  WORKING-DIRECTORY: Org-Templates
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
 
 jobs:
   init:
