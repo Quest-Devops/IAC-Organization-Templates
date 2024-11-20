@@ -40,7 +40,7 @@ jobs:
       # Terraform Init
       - name: Terraform Init
         run: |
-          working-directory: ${{ env.WORKING-DIRECTORY }}
+        working-directory: ${{ env.WORKING-DIRECTORY }}
           terraform init -upgrade
 
   validate:
