@@ -106,8 +106,8 @@ jobs:
 
       # Terraform Plan
       - name: Terraform Plan
+        working-directory: ${{ env.WORKING-DIRECTORY }}
         run: |
-          working-directory: ${{ env.WORKING-DIRECTORY }}
           terraform init -upgrade
           terraform plan --var-file=folder.tfvars --var-file=orgpolicy.tfvars
 
@@ -136,12 +136,12 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
-          working-directory: ${{ env.WORKING-DIRECTORY }}
+        working-directory: ${{ env.WORKING-DIRECTORY }}
 
       # Terraform Apply
       - name: Terraform Apply
+        working-directory: ${{ env.WORKING-DIRECTORY }}
         run: |
-          working-directory: ${{ env.WORKING-DIRECTORY }}
           terraform init -upgrade
           terraform apply --var-file=folder.tfvars --var-file=orgpolicy.tfvars --auto-approve -input=false
           # terraform destroy --var-file=folder.tfvars --auto-approve
