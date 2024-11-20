@@ -29,7 +29,9 @@ jobs:
 
       - id: auth
         uses: google-github-actions/auth@v0.4.0
-
+        with:
+          workload_identity_provider: '${{ secrets.WIF }}'
+          service_account: '${{ secrets.SA }}'
 
       # Replacing placeholders in Terraform files
       - name: Replacing placeholders
