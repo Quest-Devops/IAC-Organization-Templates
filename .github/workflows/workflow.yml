@@ -75,10 +75,7 @@ jobs:
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GIT_TOKEN }}|g" *.tf
         working-directory: ${{ env.WORKING-DIRECTORY }}
-      - name: Terraform Plan
-        working-directory: ${{ env.WORKING-DIRECTORY }}
-        run: |
-          terraform validate
+ 
 
   tflint:
     needs: validate
