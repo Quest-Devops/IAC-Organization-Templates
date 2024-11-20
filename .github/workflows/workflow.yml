@@ -113,7 +113,7 @@ jobs:
       - name: Terraform Plan
         working-directory: ${{ env.WORKING-DIRECTORY }}
         run: |
-          #terraform init -upgrade
+          terraform init -upgrade
           terraform plan --var-file=folder.tfvars --var-file=orgpolicy.tfvars
 
   apply:
