@@ -6,6 +6,7 @@ jobs:
  lint:
    name: Run Terraform Lint
    runs-on: ubuntu-latest
+
    steps:
      - name: Checkout code
        uses: actions/checkout@v3
