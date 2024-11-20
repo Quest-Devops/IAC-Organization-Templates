@@ -6,6 +6,12 @@ jobs:
  lint:
    name: Run Terraform Lint
    runs-on: ubuntu-latest
+   defaults:
+      run: 
+        shell: bash      
+   env: 
+      WORKING-DIRECTORY: Org-Templates
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
    steps:
      - name: Checkout code
