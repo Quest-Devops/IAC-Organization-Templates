@@ -10,14 +10,14 @@ on:
 permissions:
   contents: read
   id-token: 'write'
+env: 
+  working-directory: Org-Templates
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
   init:
-    runs-on: ubuntu-latest
-
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      working-directory: Org-Templates
+    runs-on: ubuntu-latest      
+      
 
     steps:
       # Checkout repository to GitHub action runner
@@ -27,8 +27,8 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v0.4.0
         with:
-          workload_identity_provider: 'projects/908852839842/locations/global/workloadIdentityPools/quest/providers/quest-github'
-          service_account: 'inf-sa@seed-440521.iam.gserviceaccount.com'
+          workload_identity_provider: '${{ secrets.WIF }}'
+          service_account: '${{ secrets.SA }}'
 
       # Replacing placeholders in Terraform files
       - name: Replacing placeholders
@@ -41,7 +41,7 @@ jobs:
       - name: Terraform Init
         run: |
           working-directory: ${{ env.working-directory }}
-          terraform init --reconfigure
+          terraform init -upgrade
 
   validate:
     runs-on: ubuntu-latest
@@ -57,8 +57,8 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v0.4.0
         with:
-          workload_identity_provider: 'projects/908852839842/locations/global/workloadIdentityPools/quest/providers/quest-github'
-          service_account: 'inf-sa@seed-440521.iam.gserviceaccount.com'
+          workload_identity_provider: '${{ secrets.WIF }}'
+          service_account: '${{ secrets.SA }}'
 
       # Replacing placeholders in Terraform files
       - name: Replacing placeholders
@@ -85,8 +85,8 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v0.4.0
         with:
-          workload_identity_provider: 'projects/908852839842/locations/global/workloadIdentityPools/quest/providers/quest-github'
-          service_account: 'inf-sa@seed-440521.iam.gserviceaccount.com'
+          workload_identity_provider: '${{ secrets.WIF }}'
+          service_account: '${{ secrets.SA }}'
 
       # Replacing placeholders in Terraform files
       - name: Replacing placeholders
@@ -118,8 +118,8 @@ jobs:
       - id: auth
         uses: google-github-actions/auth@v0.4.0
         with:
-          workload_identity_provider: 'projects/908852839842/locations/global/workloadIdentityPools/quest/providers/quest-github'
-          service_account: 'inf-sa@seed-440521.iam.gserviceaccount.com'
+          workload_identity_provider: '${{ secrets.WIF }}'
+          service_account: '${{ secrets.SA }}'
 
       # Replacing placeholders in Terraform files
       - name: Replacing placeholders
@@ -132,7 +132,7 @@ jobs:
       - name: Terraform Apply
         run: |
           working-directory: ${{ env.working-directory }}
-          terraform init -reconfigure
+          terraform init -upgrade
           terraform apply --var-file=folder.tfvars --var-file=orgpolicy.tfvars --auto-approve -input=false
           # terraform destroy --var-file=folder.tfvars --auto-approve
 
