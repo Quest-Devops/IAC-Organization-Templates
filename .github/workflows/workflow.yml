@@ -69,7 +69,7 @@ jobs:
 
   tflint:
     needs: validate
-    uses: ./.github/workflows/lint.yaml
+    uses: ./.github/workflows/lint.yml
 
   plan:
     runs-on: ubuntu-latest
