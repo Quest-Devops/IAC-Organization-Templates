@@ -28,17 +28,6 @@ module "Level_3_boot_BU_Folders" {
   depends_on   = [ module.Level_2_BU_Folders ]
 }
 
-/* module "Level_3_shrd_BU_Folders" {
-  for_each     = {
-    for k, v in try(var.Level_3_shrd_BU_Folders,{}): k => v if v.delete != true
-  }
-  source       = "git::https://github.com/Karandhawariyaji/QUEST_Module.git?ref=v0.0.3"
-  folder_name  = each.key
-  parent       = module.Level_2_BU_Folders["gcp-shrd"].folder_details.id
-  tags         = each.value.tags
-  deletion_protection = each.value.deletion_protection
-  depends_on   = [ module.Level_2_BU_Folders ]
-} */
 module "Level_3_us_BU_Folders" {
   for_each     = {
     for k, v in try(var.Level_3_us_BU_Folders,{}): k => v if v.delete != true
@@ -50,17 +39,6 @@ module "Level_3_us_BU_Folders" {
   deletion_protection = each.value.deletion_protection
   depends_on   = [ module.Level_2_BU_Folders ]
 }
-/* module "Level_3_eu_BU_Folders" {
-  for_each     = {
-    for k, v in try(var.Level_3_eu_BU_Folders,{}): k => v if v.delete != true
-  }
-  source       ="git::https://github.com/Karandhawariyaji/QUEST_Module.git?ref=v0.0.3" 
-  folder_name  = each.key
-  parent       = module.Level_2_BU_Folders["gcp-eu"].folder_details.id
-  tags         = each.value.tags
-  deletion_protection = each.value.deletion_protection
-  depends_on   = [ module.Level_2_BU_Folders ]
-} */
 
 
 # **************************************** END Level-3 Configurations *****************************************
