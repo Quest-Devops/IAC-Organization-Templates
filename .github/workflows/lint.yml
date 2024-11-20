@@ -17,6 +17,14 @@ jobs:
      - name: Install tflint
        run: |
          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh| bash
+    # Replacing placeholders in Terraform files
+     - name: Replacing placeholders
+       working-directory: ${{ env.WORKING-DIRECTORY }}
+       run: |
+          echo "***** Replacing placeholders with GIT_TOKEN *****"
+          sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
+        
+
          
      - name: Run tflint
        run: |
