@@ -77,8 +77,11 @@ jobs:
         working-directory: ${{ env.WORKING-DIRECTORY }}
       - name: Terraform Plan
         working-directory: ${{ env.WORKING-DIRECTORY }}
-        run: |
+        run: | 
+          terraform init
           terraform validate
+
+         
 
   tflint:
     needs: validate
