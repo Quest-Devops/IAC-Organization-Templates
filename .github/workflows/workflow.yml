@@ -17,6 +17,7 @@ jobs:
 
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      working-directory: Org-Templates
 
     steps:
       # Checkout repository to GitHub action runner
@@ -34,19 +35,19 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
-        working-directory: Org-Templates
+        working-directory: ${{ env.working-directory }}
 
       # Terraform Init
       - name: Terraform Init
         run: |
-          cd Org_Template/terraform-google-cloud-folder
+          working-directory: ${{ env.working-directory }}
           terraform init --reconfigure
 
   validate:
     runs-on: ubuntu-latest
     needs: init
     env:
-      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
     steps:
       # Checkout repository to GitHub action runner
@@ -64,7 +65,7 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GIT_TOKEN }}|g" *.tf
-        working-directory: Org-Templates
+        working-directory: ${{ env.working-directory }}
 
   tflint:
     needs: validate
@@ -92,7 +93,7 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
-        working-directory: Org-Templates
+        working-directory: ${{ env.working-directory }}
 
       # Terraform Plan
       - name: Terraform Plan
@@ -125,12 +126,12 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
-        working-directory: Org-Templates
+        working-directory: ${{ env.working-directory }}
 
       # Terraform Apply
       - name: Terraform Apply
         run: |
-          cd Org-Templates
+          working-directory: ${{ env.working-directory }}
           terraform init -reconfigure
           terraform apply --var-file=folder.tfvars --var-file=orgpolicy.tfvars --auto-approve -input=false
           # terraform destroy --var-file=folder.tfvars --auto-approve
