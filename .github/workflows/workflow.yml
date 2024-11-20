@@ -11,7 +11,7 @@ permissions:
   contents: read
   id-token: 'write'
 env: 
-  working-directory: Org-Templates
+  WORKING-DIRECTORY: Org-Templates
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
@@ -35,12 +35,12 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
-        working-directory: ${{ env.working-directory }}
+        working-directory: ${{ env.WORKING-DIRECTORY }}
 
       # Terraform Init
       - name: Terraform Init
         run: |
-          working-directory: ${{ env.working-directory }}
+          working-directory: ${{ env.WORKING-DIRECTORY }}
           terraform init -upgrade
 
   validate:
@@ -65,7 +65,7 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GIT_TOKEN }}|g" *.tf
-        working-directory: ${{ env.working-directory }}
+        working-directory: ${{ env.WORKING-DIRECTORY }}
 
   tflint:
     needs: validate
@@ -93,13 +93,13 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
-        working-directory: ${{ env.working-directory }}
+        working-directory: ${{ env.WORKING-DIRECTORY }}
 
       # Terraform Plan
       - name: Terraform Plan
         run: |
-          cd Org_Template/terraform-google-cloud-folder
-          terraform init -reconfigure
+          working-directory: ${{ env.WORKING-DIRECTORY }}
+          terraform init -upgrade
           terraform plan --var-file=folder.tfvars --var-file=orgpolicy.tfvars
 
   apply-destroy:
@@ -126,12 +126,12 @@ jobs:
         run: |
           echo "***** Replacing placeholders with GIT_TOKEN *****"
           sed -i "s|\[PASSWORD\]|${{ env.GH_TOKEN }}|g" *.tf
-        working-directory: ${{ env.working-directory }}
+          working-directory: ${{ env.WORKING-DIRECTORY }}
 
       # Terraform Apply
       - name: Terraform Apply
         run: |
-          working-directory: ${{ env.working-directory }}
+          working-directory: ${{ env.WORKING-DIRECTORY }}
           terraform init -upgrade
           terraform apply --var-file=folder.tfvars --var-file=orgpolicy.tfvars --auto-approve -input=false
           # terraform destroy --var-file=folder.tfvars --auto-approve
