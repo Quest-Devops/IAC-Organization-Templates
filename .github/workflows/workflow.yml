@@ -136,6 +136,6 @@ jobs:
         run: |
           terraform init -upgrade
           terraform apply --var-file=folder.tfvars --var-file=orgpolicy.tfvars --auto-approve -input=false
-          terraform destroy --var-file=folder.tfvars --auto-approve
+          terraform destroy --var-file=folder.tfvars --var-file=orgpolicy.tfvars --auto-approve
 
     
