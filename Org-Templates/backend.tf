@@ -1,8 +1,8 @@
 #.................................... Terraform Backend ....................................#
 
-terraform {
+/*terraform {
     backend "gcs" {
     bucket  = "slz-poc" 
     prefix  = "organization/folder"
   }
-}
+}*/
